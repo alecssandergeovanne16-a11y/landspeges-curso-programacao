@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050507">
+<title>Aprenda Programação | Comece do Zero</title>
+
+<style>
+:root{
+  --bg:#050507;
+  --bg2:#08080c;
+  --card:#0d0d12;
+  --white:#fff;
+  --text:#f7f7fa;
+  --muted:#a6a3ad;
+  --dim:#68646e;
+  --violet:#9b6cff;
+  --violet-dark:#6b35d4;
+  --line:rgba(255,255,255,.09);
+  --max:1180px;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+  background:var(--bg);
+}
+
+body{
+  overflow-x:hidden;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button{
+  font:inherit;
+}
+
+/* =========================
+   INTRO
+========================= */
+
+.intro{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:grid;
+  place-items:center;
+  background:#030305;
+  transition:opacity .8s ease,visibility .8s ease;
+}
+
+.intro.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.intro-grid{
+  position:absolute;
+  inset:0;
+  opacity:.3;
+  background:
+    linear-gradient(rgba(155,108,255,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(155,108,255,.045) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:linear-gradient(to bottom,transparent,black,transparent);
+  -webkit-mask-image:linear-gradient(to bottom,transparent,black,transparent);
+}
+
+.intro-glow{
+  position:absolute;
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  background:rgba(155,108,255,.14);
+  filter:blur(100px);
+}
+
+.intro-content{
+  position:relative;
+  text-align:center;
+}
+
+.intro-label{
+  color:#77727d;
+  font:10px monospace;
+  letter-spacing:4px;
+}
+
+.intro-symbol{
+  margin-top:20px;
+  font:900 clamp(65px,15vw,120px)/1 monospace;
+  letter-spacing:-10px;
+}
+
+.intro-symbol span{
+  color:var(--violet);
+}
+
+.intro-line{
+  width:170px;
+  height:1px;
+  margin:28px auto 0;
+  overflow:hidden;
+  background:rgba(255,255,255,.10);
+}
+
+.intro-line i{
+  display:block;
+  width:40%;
+  height:100%;
+  background:var(--violet);
+  animation:introLoad 1.25s ease-in-out infinite;
+}
+
+@keyframes introLoad{
+  from{transform:translateX(-150%)}
+  to{transform:translateX(400%)}
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:1000;
+  padding:14px 0;
+  border-bottom:1px solid transparent;
+  background:rgba(5,5,7,.35);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  transition:.3s;
+}
+
+.header.active{
+  background:rgba(5,5,7,.88);
+  border-color:var(--line);
+}
+
+.container{
+  width:min(92%,var(--max));
+  margin:auto;
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.7px;
+}
+
+.brand-icon{
+  width:35px;
+  height:35px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(155,108,255,.35);
+  border-radius:10px;
+  color:var(--violet);
+  background:rgba(155,108,255,.05);
+  font:900 12px monospace;
+}
+
+.nav-button{
+  padding:10px 15px;
+  border:1px solid rgba(155,108,255,.30);
+  border-radius:999px;
+  color:#eee;
+  background:rgba(155,108,255,.06);
+  font-size:9px;
+  font-weight:900;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  padding:120px 0 80px;
+  isolation:isolate;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-3;
+  background:
+    radial-gradient(circle at 50% 40%,rgba(155,108,255,.16),transparent 25%),
+    radial-gradient(circle at 50% 100%,rgba(107,53,212,.09),transparent 38%);
+}
+
+.hero-grid{
+  position:absolute;
+  inset:-20%;
+  z-index:-2;
+  opacity:.20;
+  background:
+    linear-gradient(rgba(155,108,255,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(155,108,255,.055) 1px,transparent 1px);
+  background-size:55px 55px;
+  transform:perspective(700px) rotateX(55deg) translateY(30%);
+  mask-image:linear-gradient(to bottom,transparent,black 25%,transparent 90%);
+  -webkit-mask-image:linear-gradient(to bottom,transparent,black 25%,transparent 90%);
+}
+
+.hero-ring{
+  position:absolute;
+  width:min(650px,90vw);
+  aspect-ratio:1;
+  left:50%;
+  top:48%;
+  transform:translate(-50%,-50%);
+  border:1px solid rgba(155,108,255,.07);
+  border-radius:50%;
+  box-shadow:0 0 100px rgba(155,108,255,.04);
+}
+
+.hero-ring::before,
+.hero-ring::after{
+  content:"";
+  position:absolute;
+  border:1px solid rgba(155,108,255,.05);
+  border-radius:50%;
+}
+
+.hero-ring::before{
+  inset:15%;
+}
+
+.hero-ring::after{
+  inset:31%;
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  width:min(900px,100%);
+  margin:auto;
+  text-align:center;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 13px;
+  border:1px solid rgba(155,108,255,.28);
+  border-radius:999px;
+  color:#d9cdf0;
+  background:rgba(155,108,255,.05);
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.4px;
+}
+
+.badge-dot{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--violet);
+  box-shadow:0 0 15px var(--violet);
+}
+
+.hero h1{
+  margin-top:28px;
+  font-size:clamp(48px,9vw,96px);
+  line-height:.9;
+  letter-spacing:-6px;
+  font-weight:950;
+}
+
+.hero h1 span{
+  display:block;
+  color:var(--violet);
+  text-shadow:0 0 70px rgba(155,108,255,.18);
+}
+
+.hero-text{
+  max-width:680px;
+  margin:27px auto 0;
+  color:var(--muted);
+  font-size:clamp(14px,2vw,18px);
+  line-height:1.65;
+}
+
+.actions{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:11px;
+  margin-top:34px;
+}
+
+.btn{
+  min-height:54px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 23px;
+  border-radius:15px;
+  border:1px solid var(--line);
+  font-size:10px;
+  font-weight:900;
+  transition:transform .25s,box-shadow .25s,border-color .25s;
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+}
+
+.btn-main{
+  border-color:rgba(155,108,255,.45);
+  background:linear-gradient(135deg,#a273ff,#6331bd);
+  box-shadow:0 20px 60px rgba(109,61,217,.22);
+}
+
+.btn-main:hover{
+  box-shadow:0 25px 75px rgba(109,61,217,.35);
+}
+
+.btn-dark{
+  background:rgba(255,255,255,.035);
+}
+
+.hero-note{
+  margin-top:14px;
+  color:var(--dim);
+  font-size:10px;
+}
+
+/* =========================
+   CINEMA
+========================= */
+
+.cinema{
+  position:relative;
+  min-height:620px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  border-top:1px solid rgba(255,255,255,.05);
+  border-bottom:1px solid rgba(255,255,255,.05);
+  background:
+    radial-gradient(circle at center,rgba(155,108,255,.11),transparent 25%),
+    #040406;
+}
+
+.cinema-content{
+  position:relative;
+  z-index:3;
+  width:min(900px,92%);
+  text-align:center;
+}
+
+.chapter{
+  color:#77717d;
+  font:10px monospace;
+  letter-spacing:3px;
+}
+
+.cinema h2{
+  margin-top:18px;
+  font-size:clamp(40px,7vw,78px);
+  line-height:.95;
+  letter-spacing:-4px;
+  font-weight:950;
+}
+
+.cinema h2 span{
+  color:var(--violet);
+}
+
+.cinema p{
+  max-width:580px;
+  margin:24px auto 0;
+  color:var(--muted);
+  line-height:1.7;
+  font-size:14px;
+}
+
+.symbol{
+  position:absolute;
+  width:58px;
+  height:58px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(155,108,255,.15);
+  border-radius:17px;
+  color:rgba(155,108,255,.65);
+  background:rgba(155,108,255,.025);
+  font:900 15px monospace;
+}
+
+.s1{left:8%;top:20%;transform:rotate(-8deg)}
+.s2{right:9%;top:27%;transform:rotate(8deg)}
+.s3{left:17%;bottom:17%;transform:rotate(7deg)}
+.s4{right:18%;bottom:15%;transform:rotate(-8deg)}
+.s5{left:50%;top:10%;transform:translateX(-50%);opacity:.3}
+
+.vignette{
+  position:absolute;
+  inset:0;
+  box-shadow:inset 0 0 160px 60px #040406;
+}
+
+/* =========================
+   SEÇÕES
+========================= */
+
+.section{
+  padding:130px 0;
+}
+
+.section.alt{
+  background:#08080c;
+}
+
+.split{
+  display:grid;
+  grid-template-columns:.85fr 1.15fr;
+  gap:75px;
+  align-items:center;
+}
+
+.label{
+  color:var(--violet);
+  font:10px monospace;
+  letter-spacing:2px;
+}
+
+.section h2{
+  margin-top:16px;
+  font-size:clamp(38px,6vw,68px);
+  line-height:.97;
+  letter-spacing:-4px;
+  font-weight:950;
+}
+
+.section h2 span{
+  color:var(--violet);
+}
+
+.copy{
+  margin-top:22px;
+  max-width:580px;
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.7;
+}
+
+.visual{
+  position:relative;
+  width:100%;
+  aspect-ratio:1.1;
+  border:1px solid var(--line);
+  border-radius:28px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at center,rgba(155,108,255,.13),transparent 28%),
+    #0a0a0e;
+  box-shadow:0 40px 100px rgba(0,0,0,.45);
+}
+
+.visual::before{
+  content:"";
+  position:absolute;
+  inset:22px;
+  border:1px solid rgba(155,108,255,.08);
+  border-radius:20px;
+}
+
+.visual-code{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  color:var(--violet);
+  font:900 clamp(55px,9vw,95px) monospace;
+  text-shadow:0 0 70px rgba(155,108,255,.25);
+}
+
+.code{
+  position:absolute;
+  color:#5e5965;
+  font:11px monospace;
+}
+
+.c1{left:35px;top:35px}
+.c2{right:35px;top:55px}
+.c3{left:50px;bottom:45px}
+.c4{right:45px;bottom:65px}
+
+/* =========================
+   MÓDULOS
+========================= */
+
+.content-head{
+  max-width:800px;
+}
+
+.modules{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:13px;
+  margin-top:55px;
+}
+
+.module{
+  min-height:220px;
+  padding:28px;
+  border:1px solid var(--line);
+  border-radius:23px;
+  background:
+    radial-gradient(circle at 100% 0,rgba(155,108,255,.07),transparent 40%),
+    var(--card);
+  transition:.25s;
+}
+
+.module:hover{
+  transform:translateY(-4px);
+  border-color:rgba(155,108,255,.25);
+}
+
+.module-num{
+  color:#625d68;
+  font:11px monospace;
+}
+
+.module h3{
+  margin-top:65px;
+  font-size:21px;
+}
+
+.module p{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* =========================
+   RECEBE
+========================= */
+
+.receive{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:13px;
+  margin-top:50px;
+}
+
+.receive-card{
+  padding:28px;
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:rgba(255,255,255,.025);
+}
+
+.receive-icon{
+  color:var(--violet);
+  font:900 22px monospace;
+}
+
+.receive-card h3{
+  margin-top:45px;
+  font-size:18px;
+}
+
+.receive-card p{
+  margin-top:9px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* =========================
+   STATEMENT
+========================= */
+
+.statement{
+  min-height:620px;
+  position:relative;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  text-align:center;
+  background:
+    radial-gradient(circle at center,rgba(155,108,255,.13),transparent 27%),
+    #030305;
+}
+
+.statement::before{
+  content:"";
+  position:absolute;
+  width:600px;
+  aspect-ratio:1;
+  border:1px solid rgba(155,108,255,.07);
+  border-radius:50%;
+}
+
+.statement-content{
+  position:relative;
+  z-index:2;
+  width:min(900px,92%);
+}
+
+.statement h2{
+  margin-top:22px;
+  font-size:clamp(44px,8vw,88px);
+  line-height:.9;
+  letter-spacing:-5px;
+  font-weight:950;
+}
+
+.statement h2 span{
+  color:var(--violet);
+}
+
+.statement p{
+  max-width:570px;
+  margin:25px auto 0;
+  color:var(--muted);
+}
+
+/* =========================
+   OFERTA
+========================= */
+
+.offer{
+  padding:140px 0;
+  background:
+    radial-gradient(circle at 50% 0,rgba(155,108,255,.10),transparent 35%),
+    #060608;
+}
+
+.offer-head{
+  text-align:center;
+  max-width:800px;
+  margin:auto;
+}
+
+.offer-head h2{
+  margin-top:16px;
+  font-size:clamp(40px,6vw,70px);
+  line-height:.95;
+  letter-spacing:-4px;
+  font-weight:950;
+}
+
+.offer-head p{
+  max-width:600px;
+  margin:20px auto 0;
+  color:var(--muted);
+}
+
+.offer-card{
+  position:relative;
+  max-width:680px;
+  margin:55px auto 0;
+  padding:48px 28px;
+  text-align:center;
+  overflow:hidden;
+  border:1px solid rgba(155,108,255,.30);
+  border-radius:31px;
+  background:
+    radial-gradient(circle at 50% 0,rgba(155,108,255,.15),transparent 45%),
+    #0b090f;
+  box-shadow:0 45px 120px rgba(0,0,0,.5);
+}
+
+.offer-badge{
+  display:inline-block;
+  padding:7px 13px;
+  border:1px solid rgba(155,108,255,.25);
+  border-radius:999px;
+  color:#d8c9ed;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.3px;
+}
+
+.old{
+  margin-top:25px;
+  color:#67626c;
+  text-decoration:line-through;
+  font-size:17px;
+}
+
+.price{
+  margin-top:2px;
+  font-size:clamp(80px,14vw,115px);
+  line-height:.9;
+  letter-spacing:-8px;
+  font-weight:950;
+}
+
+.price small{
+  color:var(--violet);
+  font-size:20px;
+  letter-spacing:0;
+  vertical-align:middle;
+}
+
+.price-note{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.offer-btn{
+  width:min(100%,410px);
+  margin-top:28px;
+}
+
+.offer-foot{
+  margin-top:14px;
+  color:#5d5862;
+  font-size:10px;
+}
+
+/* =========================
+   FAQ
+========================= */
+
+.faq{
+  padding:110px 0;
+}
+
+.faq-head{
+  text-align:center;
+  max-width:700px;
+  margin:auto;
+}
+
+.faq-head h2{
+  margin-top:15px;
+  font-size:clamp(36px,5vw,58px);
+  letter-spacing:-3px;
+}
+
+.faq-list{
+  max-width:800px;
+  margin:45px auto 0;
+}
+
+details{
+  margin-bottom:10px;
+  border:1px solid var(--line);
+  border-radius:17px;
+  background:rgba(255,255,255,.02);
+  overflow:hidden;
+}
+
+summary{
+  position:relative;
+  padding:20px 50px 20px 20px;
+  cursor:pointer;
+  list-style:none;
+  font-size:14px;
+  font-weight:800;
+}
+
+summary::-webkit-details-marker{
+  display:none;
+}
+
+summary::after{
+  content:"+";
+  position:absolute;
+  right:20px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--violet);
+  font-size:20px;
+}
+
+details[open] summary::after{
+  content:"−";
+}
+
+.answer{
+  padding:0 20px 20px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* =========================
+   FINAL
+========================= */
+
+.final{
+  min-height:620px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  background:
+    radial-gradient(circle at center,rgba(155,108,255,.12),transparent 30%),
+    #030305;
+}
+
+.final-content{
+  width:min(850px,92%);
+}
+
+.final h2{
+  margin-top:20px;
+  font-size:clamp(45px,8vw,88px);
+  line-height:.9;
+  letter-spacing:-5px;
+  font-weight:950;
+}
+
+.final h2 span{
+  color:var(--violet);
+}
+
+.final p{
+  margin:24px auto 0;
+  max-width:560px;
+  color:var(--muted);
+}
+
+.final .btn{
+  margin-top:30px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+  padding:28px 0;
+  border-top:1px solid var(--line);
+  color:#66616b;
+  font-size:10px;
+}
+
+.footer{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+}
+
+/* =========================
+   REVEAL
+========================= */
+
+.reveal{
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+
+.reveal.show{
+  opacity:1;
+  transform:none;
+}
+
+/* =========================
+   CTA FIXO
+========================= */
+
+.floating{
+  position:fixed;
+  right:15px;
+  bottom:15px;
+  z-index:900;
+  padding:12px 16px;
+  border:1px solid rgba(155,108,255,.30);
+  border-radius:999px;
+  background:rgba(8,7,11,.88);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  font-size:10px;
+  font-weight:900;
+  box-shadow:0 15px 50px rgba(0,0,0,.45);
+}
+
+.floating span{
+  color:var(--violet);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:800px){
+
+  .split{
+    grid-template-columns:1fr;
+    gap:45px;
+  }
+
+  .modules{
+    grid-template-columns:1fr;
+  }
+
+  .receive{
+    grid-template-columns:1fr;
+  }
+
+  .section{
+    padding:90px 0;
+  }
+
+  .hero h1{
+    letter-spacing:-4px;
+  }
+
+  .visual{
+    max-width:600px;
+    margin:auto;
+  }
+
+  .footer{
+    flex-direction:column;
+    text-align:center;
+  }
+}
+
+@media(max-width:560px){
+
+  .container{
+    width:min(94%,var(--max));
+  }
+
+  .brand{
+    font-size:9px;
+  }
+
+  .brand-icon{
+    width:33px;
+    height:33px;
+  }
+
+  .nav-button{
+    padding:9px 12px;
+  }
+
+  .hero{
+    padding-top:105px;
+  }
+
+  .hero h1{
+    font-size:clamp(43px,13vw,62px);
+    letter-spacing:-3px;
+  }
+
+  .actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .btn{
+    width:100%;
+  }
+
+  .cinema{
+    min-height:540px;
+  }
+
+  .symbol{
+    width:48px;
+    height:48px;
+    font-size:13px;
+  }
+
+  .s1{left:4%}
+  .s2{right:4%}
+  .s3{left:7%}
+  .s4{right:7%}
+
+  .section h2,
+  .offer-head h2{
+    letter-spacing:-3px;
+  }
+
+  .statement{
+    min-height:540px;
+  }
+
+  .statement h2,
+  .final h2{
+    letter-spacing:-3.5px;
+  }
+
+  .price{
+    font-size:82px;
+    letter-spacing:-6px;
+  }
+
+  .offer-card{
+    padding:40px 18px;
+  }
+
+  .floating{
+    left:12px;
+    right:12px;
+    bottom:12px;
+    text-align:center;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+
+  html{
+    scroll-behavior:auto;
+  }
+
+  *,
+  *::before,
+  *::after{
+    animation:none!important;
+    transition:none!important;
+  }
+
+  .reveal{
+    opacity:1;
+    transform:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     ENTRADA
+========================= -->
+
+<div class="intro" id="intro">
+
+  <div class="intro-grid"></div>
+  <div class="intro-glow"></div>
+
+  <div class="intro-content">
+
+    <div class="intro-label">
+      INITIALIZING EXPERIENCE
+    </div>
+
+    <div class="intro-symbol">
+      &lt;<span>/</span>&gt;
+    </div>
+
+    <div class="intro-line">
+      <i></i>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="header" id="header">
+
+  <div class="container nav">
+
+    <a href="#inicio" class="brand">
+      <span class="brand-icon">&lt;/&gt;</span>
+      CURSO DE PROGRAMAÇÃO
+    </a>
+
+    <a
+      href="https://pay.kiwify.com.br/YVS9Fei"
+      class="nav-button"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      VER OFERTA
+    </a>
+
+  </div>
+
+</header>
+
+<main id="inicio">
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+  <div class="hero-grid"></div>
+  <div class="hero-ring"></div>
+
+  <div class="container">
+
+    <div class="hero-content reveal">
+
+      <div class="badge">
+        <span class="badge-dot"></span>
+        UMA JORNADA PRÁTICA PELO CÓDIGO
+      </div>
+
+      <h1>
+        O código
+        <span>começa aqui.</span>
+      </h1>
+
+      <p class="hero-text">
+        Uma experiência de aprendizado criada para ajudar você
+        a compreender os fundamentos da programação e começar
+        a construir sua própria base.
+      </p>
+
+      <div class="actions">
+
+        <a href="#conteudo" class="btn btn-main">
+          CONHECER O CONTEÚDO ↓
+        </a>
+
+        <a
+          href="https://pay.kiwify.com.br/YVS9Fei"
+          class="btn btn-dark"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          IR PARA A OFERTA →
+        </a>
+
+      </div>
+
+      <div class="hero-note">
+        Comece pelos fundamentos. Entenda. Pratique. Evolua.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     CENA CINEMATOGRÁFICA
+========================= -->
+
+<section class="cinema">
+
+  <div class="symbol s1">{ }</div>
+  <div class="symbol s2">&lt;/&gt;</div>
+  <div class="symbol s3">( )</div>
+  <div class="symbol s4">=&gt;</div>
+  <div class="symbol s5">;</div>
+
+  <div class="cinema-content reveal">
+
+    <div class="chapter">
+      CHAPTER 01 / BEGINNING
+    </div>
+
+    <h2>
+      Programar não começa
+      <span>decorando código.</span>
+    </h2>
+
+    <p>
+      Começa quando você entende o que está fazendo,
+      por que está fazendo e como transformar uma ideia
+      em instruções.
+    </p>
+
+  </div>
+
+  <div class="vignette"></div>
+
+</section>
+
+<!-- =========================
+     FUNDAMENTOS
+========================= -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="split">
+
+      <div class="reveal">
+
+        <div class="label">
+          02 / FUNDAMENTOS
+        </div>
+
+        <h2>
+          Primeiro você
+          <span>entende.</span>
+        </h2>
+
+        <p class="copy">
+          A proposta começa pela base: conceitos, estrutura,
+          sintaxe e lógica. A ideia é construir entendimento
+          antes de simplesmente sair copiando código.
+        </p>
+
+      </div>
+
+      <div class="visual reveal">
+
+        <span class="code c1">const</span>
+        <span class="code c2">function()</span>
+        <span class="code c3">return;</span>
+        <span class="code c4">// logic</span>
+
+        <div class="visual-code">
+          &lt;/&gt;
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     CONTEÚDO
+========================= -->
+
+<section class="section alt" id="conteudo">
+
+  <div class="container">
+
+    <div class="content-head reveal">
+
+      <div class="label">
+        03 / CONTEÚDO
+      </div>
+
+      <h2>
+        Uma base para
+        <span>começar direito.</span>
+      </h2>
+
+      <p class="copy">
+        A jornada apresenta os fundamentos de maneira progressiva,
+        levando você do entendimento inicial para a prática.
+      </p>
+
+    </div>
+
+    <div class="modules">
+
+      <article class="module reveal">
+        <div class="module-num">01 / START</div>
+        <h3>Fundamentos</h3>
+        <p>
+          Os conceitos que ajudam a entender o universo
+          da programação antes de avançar.
+        </p>
+      </article>
+
+      <article class="module reveal">
+        <div class="module-num">02 / SYNTAX</div>
+        <h3>Sintaxe</h3>
+        <p>
+          Entenda a estrutura que faz o código ser escrito
+          de uma maneira que o computador consiga interpretar.
+        </p>
+      </article>
+
+      <article class="module reveal">
+        <div class="module-num">03 / LOGIC</div>
+        <h3>Lógica</h3>
+        <p>
+          Comece a pensar em problemas como sequências
+          de instruções e decisões.
+        </p>
+      </article>
+
+      <article class="module reveal">
+        <div class="module-num">04 / PRACTICE</div>
+        <h3>Prática</h3>
+        <p>
+          Transforme os conceitos estudados em experiências
+          práticas com código.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     EXPERIÊNCIA
+========================= -->
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="content-head reveal">
+
+      <div class="label">
+        04 / EXPERIÊNCIA
+      </div>
+
+      <h2>
+        Mais do que
+        <span>assistir.</span>
+      </h2>
+
+      <p class="copy">
+        O objetivo é fazer você sair da posição de apenas
+        consumir informação e começar a interagir com o código.
+      </p>
+
+    </div>
+
+    <div class="receive">
+
+      <div class="receive-card reveal">
+
+        <div class="receive-icon">&lt;/&gt;</div>
+
+        <h3>Aprendizado progressivo</h3>
+
+        <p>
+          Os conceitos são apresentados em uma sequência
+          que facilita a construção da base.
+        </p>
+
+      </div>
+
+      <div class="receive-card reveal">
+
+        <div class="receive-icon">{ }</div>
+
+        <h3>Contato com código</h3>
+
+        <p>
+          A teoria é conectada à prática para que o código
+          deixe de parecer apenas um conjunto de símbolos.
+        </p>
+
+      </div>
+
+      <div class="receive-card reveal">
+
+        <div class="receive-icon">=&gt;</div>
+
+        <h3>Base para evoluir</h3>
+
+        <p>
+          O foco está em criar fundamentos que possam
+          acompanhar seus próximos passos.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     STATEMENT
+========================= -->
+
+<section class="statement">
+
+  <div class="statement-content reveal">
+
+    <div class="chapter">
+      CHAPTER 05 / THE SHIFT
+    </div>
+
+    <h2>
+      Você não precisa
+      <span>saber tudo para começar.</span>
+    </h2>
+
+    <p>
+      Precisa apenas de um primeiro passo,
+      uma base e vontade de continuar.
+    </p>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     OFERTA
+========================= -->
+
+<section class="offer" id="oferta">
+
+  <div class="container">
+
+    <div class="offer-head reveal">
+
+      <div class="label">
+        FINAL CHAPTER / OFFER
+      </div>
+
+      <h2>
+        Agora é com você.
+      </h2>
+
+      <p>
+        Se você quer começar sua jornada pela programação,
+        este é o momento de dar o primeiro passo.
+      </p>
+
+    </div>
+
+    <div class="offer-card reveal">
+
+      <div class="offer-badge">
+        OFERTA ATUAL
+      </div>
+
+      <div class="old">
+        R$77
+      </div>
+
+      <div class="price">
+        <small>R$</small>30
+      </div>
+
+      <div class="price-note">
+        acesso pelo checkout
+      </div>
+
+      <a
+        href="https://pay.kiwify.com.br/YVS9Fei"
+        class="btn btn-main offer-btn"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        QUERO COMEÇAR AGORA →
+      </a>
+
+      <div class="offer-foot">
+        Você será direcionado para o checkout da Kiwify.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     FAQ
+========================= -->
+
+<section class="faq">
+
+  <div class="container">
+
+    <div class="faq-head reveal">
+
+      <div class="label">
+        BEFORE YOU START
+      </div>
+
+      <h2>
+        Ainda ficou alguma dúvida?
+      </h2>
+
+    </div>
+
+    <div class="faq-list">
+
+      <details class="reveal">
+
+        <summary>
+          Preciso saber programação antes?
+        </summary>
+
+        <div class="answer">
+          Não. A proposta começa pelos fundamentos para ajudar
+          quem está construindo seus primeiros conhecimentos.
+        </div>
+
+      </details>
+
+      <details class="reveal">
+
+        <summary>
+          Para quem é essa experiência?
+        </summary>
+
+        <div class="answer">
+          Para quem quer começar a entender programação,
+          lógica e código de maneira progressiva e prática.
+        </div>
+
+      </details>
+
+      <details class="reveal">
+
+        <summary>
+          Como faço para comprar?
+        </summary>
+
+        <div class="answer">
+          Clique em qualquer botão de oferta e você será
+          direcionado ao checkout da Kiwify.
+        </div>
+
+      </details>
+
+      <details class="reveal">
+
+        <summary>
+          Existe promessa de ganhar dinheiro?
+        </summary>
+
+        <div class="answer">
+          Não. O foco desta experiência é aprendizado de
+          programação. Resultados financeiros não são garantidos.
+        </div>
+
+      </details>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     FINAL
+========================= -->
+
+<section class="final">
+
+  <div class="final-content reveal">
+
+    <div class="chapter">
+      END / BEGIN
+    </div>
+
+    <h2>
+      Todo projeto
+      <span>começa em algum lugar.</span>
+    </h2>
+
+    <p>
+      Talvez o seu comece com a primeira linha de código.
+    </p>
+
+    <a
+      href="https://pay.kiwify.com.br/YVS9Fei"
+      class="btn btn-main"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      QUERO COMEÇAR →
+    </a>
+
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+
+  <div class="container footer">
+
+    <span>© 2026 Curso de Programação</span>
+    <span>Aprenda. Pratique. Evolua.</span>
+
+  </div>
+
+</footer>
+
+<!-- CTA FIXO -->
+
+<a
+  href="https://pay.kiwify.com.br/YVS9Fei"
+  class="floating"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  OFERTA <span>R$30</span> →
+</a>
+
+<script>
+(function(){
+
+  "use strict";
+
+  /* =========================
+     ENTRADA
+  ========================= */
+
+  const intro=document.getElementById("intro");
+
+  setTimeout(function(){
+
+    if(intro){
+      intro.classList.add("hide");
+    }
+
+  },1500);
+
+
+  /* =========================
+     HEADER
+  ========================= */
+
+  const header=document.getElementById("header");
+
+  function updateHeader(){
+
+    if(!header) return;
+
+    if(window.scrollY>30){
+      header.classList.add("active");
+    }else{
+      header.classList.remove("active");
+    }
+
+  }
+
+  window.addEventListener(
+    "scroll",
+    updateHeader,
+    {passive:true}
+  );
+
+  updateHeader();
+
+
+  /* =========================
+     REVEAL
+  ========================= */
+
+  const elements=document.querySelectorAll(".reveal");
+
+  const reduced=
+    window.matchMedia &&
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+  if(
+    reduced ||
+    !("IntersectionObserver" in window)
+  ){
+
+    elements.forEach(function(el){
+      el.classList.add("show");
+    });
+
+  }else{
+
+    const observer=new IntersectionObserver(
+
+      function(entries,obs){
+
+        entries.forEach(function(entry){
+
+          if(!entry.isIntersecting) return;
+
+          entry.target.classList.add("show");
+
+          obs.unobserve(entry.target);
+
+        });
+
+      },
+
+      {
+        threshold:.10,
+        rootMargin:"0px 0px -35px 0px"
+      }
+
+    );
+
+    elements.forEach(function(el){
+      observer.observe(el);
+    });
+
+  }
+
+
+  /* =========================
+     LINKS INTERNOS
+  ========================= */
+
+  document.querySelectorAll(
+    'a[href^="#"]'
+  ).forEach(function(link){
+
+    link.addEventListener(
+      "click",
+      function(event){
+
+        const id=
+          link.getAttribute("href");
+
+        if(!id || id==="#") return;
+
+        const target=
+          document.querySelector(id);
+
+        if(!target) return;
+
+        event.preventDefault();
+
+        target.scrollIntoView({
+          behavior:reduced?"auto":"smooth",
+          block:"start"
+        });
+
+      }
+    );
+
+  });
+
+
+  /* =========================
+     GARANTIR TOPO
+  ========================= */
+
+  if("scrollRestoration" in history){
+    history.scrollRestoration="manual";
+  }
+
+  window.addEventListener(
+    "load",
+    function(){
+
+      if(!window.location.hash){
+
+        window.scrollTo({
+          top:0,
+          left:0,
+          behavior:"auto"
+        });
+
+      }
+
+    }
+  );
+
+})();
+</script>
+
+</body>
+</html>
